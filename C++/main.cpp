@@ -43,10 +43,8 @@ int main(){
 
         newAmount = withdrawAmount;
 
-        //Total Amount Withdrawn
-        totalWithdrawn += withdrawAmount;
 
-        if (totalWithdrawn <= 500){
+        if (totalWithdrawn + withdrawAmount <= 500){
             if (withdrawAmount <= 500 && withdrawAmount >= 0){
 
                 //Calculation of New Amount (Balance after Service Charge application)
@@ -56,7 +54,10 @@ int main(){
                     if (withdrawAmount > 300){
                         //New Balance
                         balance -= newAmount;
-                        if (balance > newAmount){
+
+                            //Total Amount Withdrawn
+                            totalWithdrawn += withdrawAmount;
+
                             //Output
                             std::cout << "---------------------------------------------" << std::endl;
                             std::cout << "            ATM TRANSACTION SUMMARY           " << std::endl;
@@ -70,13 +71,13 @@ int main(){
 
                             std::cout << "Would you like to withdraw again?(Y/N)";
                             std::cin >> reWithdraw;
-                        }else{
-
-                        }
 
                     }else{
                         //New Balance
                         balance -= withdrawAmount;
+
+                        //Total Amount Withdrawn
+                        totalWithdrawn += withdrawAmount;
 
                         //Output
                         std::cout << "---------------------------------------------" << std::endl;
@@ -106,6 +107,9 @@ int main(){
                         //New Balance
                         balance -= newAmount;
 
+                        //Total Amount Withdrawn
+                        totalWithdrawn += withdrawAmount;
+
                         std::cout << "---------------------------------------------" << std::endl;
                         std::cout << "            ATM TRANSACTION SUMMARY           " << std::endl;
                         std::cout << "---------------------------------------------" << std::endl;
@@ -131,12 +135,16 @@ int main(){
             }else{
                 //If you input an amount more than $500
                 std::cout << "Invalid amount to withdraw. Maximum withdraw amount is $500";
+                std:: cout << "Do you want to withdraw a lower amount of money?"<< std::endl;
+                std:: cin >> reStart;
+                if (reStart ==  "Y" || reStart == "y"){
+                    continue;
+                }else{
+                    break;
+                }
             }
-        }else
-        {
+        }else{
             std::cout << "Withdrawal failed. Your Daily limit is $500." << std::endl;
-            std:: cout << "Do you want to withdraw a lower amount of money?"<< std::endl;
-            std:: cout << reStart;
         }
     }
 
