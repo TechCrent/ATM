@@ -23,7 +23,7 @@ dispenses the money to the customer, and debits the account by the amount withdr
 int main(){
     //Variables
     float extraCharge = 0.0;
-    float balance = 400.00;
+    float balance = 500.00;
     float withdrawAmount;
     float newAmount;
     float serviceCharge1 = 0.04;
@@ -68,7 +68,7 @@ int main(){
                             std::cout << "---------------------------------------------" << std::endl;
                             std::cout << "AMOUNT WITHDRAWN:                 $" << withdrawAmount << std::endl;
                             std::cout << "SERVICE CHARGED:                  $"<< (serviceCharge1 * withdrawAmount) / 300 << std::endl;
-                            std::cout << "TOTAL AMOUNT DETECTED:            $"<< newAmount << std::endl;
+                            std::cout << "TOTAL AMOUNT DEDUCTED:            $"<< newAmount << std::endl;
                             std::cout << "______________________________________________" << std::endl;
                             std::cout << "YOUR CURRENT BALANCE IS:          $" << balance << std::endl;
                             std::cout << "______________________________________________" << std::endl;
@@ -83,7 +83,7 @@ int main(){
                         balance -= withdrawAmount;
 
                         //Total Amount Withdrawn
-                        totalWithdrawn += newAmount;
+                        totalWithdrawn += withdrawAmount;
 
                         //Output
                         std::cout << "---------------------------------------------" << std::endl;
@@ -103,7 +103,7 @@ int main(){
 
                     }
                     //If balance is less than the withdrawn amount, but you still have money in your account.
-                }else if (balance < newAmount && withdrawAmount > 0 && balance > 0){
+                }else if (balance < newAmount && withdrawAmount > 0 && balance > 0 && totalWithdrawn + withdrawAmount <= 500){
                     std::cout << "You do not have enough money in your account." << std::endl;
                     std::cout <<"Do you want to withdraw at a service charge of $25? (Y/N)";
                     std::cin >> decision;
@@ -148,6 +148,7 @@ int main(){
             std::cout << "Withdrawal failed. Your Daily limit is $500." << std::endl;
         }
     }
+    std::cout << "Thank you for using Cyber World ATM";
 
 
     return 0;
