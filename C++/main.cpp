@@ -22,7 +22,8 @@ dispenses the money to the customer, and debits the account by the amount withdr
 
 int main(){
     //Variables
-    float balance = 5000.00;
+    float extraCharge = 0.0;
+    float balance = 400.00;
     float withdrawAmount;
     float newAmount;
     float serviceCharge1 = 0.04;
@@ -30,7 +31,6 @@ int main(){
     float totalWithdrawn = 0.00;
     std::string decision;
     std::string reWithdraw = "y";
-    std::string reStart = "y";
 
     //Beginning Interface
     std::cout << "Welcome to Cyber World ATM. You have $5,000 in your account." << std::endl;
@@ -41,14 +41,18 @@ int main(){
         std::cout << "Enter amount to withdraw: ";
         std::cin >> withdrawAmount;
 
-        newAmount = withdrawAmount;
+
+        if (withdrawAmount > 300) {
+            extraCharge = (serviceCharge1 * withdrawAmount) / 300;
+        }
+
+        //Calculation of New Amount (Balance after Service Charge application)
+        newAmount = withdrawAmount + extraCharge;
 
 
         if (totalWithdrawn + withdrawAmount <= 500){
             if (withdrawAmount <= 500 && withdrawAmount >= 0){
 
-                //Calculation of New Amount (Balance after Service Charge application)
-                newAmount += ((serviceCharge1 * withdrawAmount) / 300);
 
                 if (balance >= newAmount){
                     if (withdrawAmount > 300){
@@ -56,7 +60,7 @@ int main(){
                         balance -= newAmount;
 
                             //Total Amount Withdrawn
-                            totalWithdrawn += withdrawAmount;
+                            totalWithdrawn += newAmount;
 
                             //Output
                             std::cout << "---------------------------------------------" << std::endl;
@@ -69,6 +73,8 @@ int main(){
                             std::cout << "YOUR CURRENT BALANCE IS:          $" << balance << std::endl;
                             std::cout << "______________________________________________" << std::endl;
 
+                        std::cout << "You can still withdraw $" << (500 - totalWithdrawn) << " today." << std::endl;
+
                             std::cout << "Would you like to withdraw again?(Y/N)";
                             std::cin >> reWithdraw;
 
@@ -77,7 +83,7 @@ int main(){
                         balance -= withdrawAmount;
 
                         //Total Amount Withdrawn
-                        totalWithdrawn += withdrawAmount;
+                        totalWithdrawn += newAmount;
 
                         //Output
                         std::cout << "---------------------------------------------" << std::endl;
@@ -89,6 +95,8 @@ int main(){
                         std::cout << "______________________________________________" << std::endl;
                         std::cout << "YOUR CURRENT BALANCE IS:          $" << balance << std::endl;
                         std::cout << "______________________________________________" << std::endl;
+
+                        std::cout << "You can still withdraw $" << (500 - totalWithdrawn) << " today." << std::endl;
 
                         std::cout << "Would you like to withdraw again?(Y/N)";
                         std::cin >> reWithdraw;
@@ -120,11 +128,11 @@ int main(){
                         std::cout << "YOUR CURRENT BALANCE IS:          $" << balance << std::endl;
                         std::cout << "______________________________________________" << std::endl;
 
-                        std::cout << "Would you like to withdraw again?(Y/N)";
-                        std::cin >> reWithdraw;
-
+                        std::cout << "You have reached your withdrawal limit for today." << std::endl;
+                        reWithdraw = "n";
                     }else{
                         std::cout << "Thank you for using Cyber World ATM";
+                        break;
                     }
                 }else{
                     //if Balance is Negative or 0
@@ -134,14 +142,7 @@ int main(){
                 }
             }else{
                 //If you input an amount more than $500
-                std::cout << "Invalid amount to withdraw. Maximum withdraw amount is $500";
-                std:: cout << "Do you want to withdraw a lower amount of money?"<< std::endl;
-                std:: cin >> reStart;
-                if (reStart ==  "Y" || reStart == "y"){
-                    continue;
-                }else{
-                    break;
-                }
+                std::cout << "Invalid amount to withdraw. Maximum withdraw amount is $500"<< std::endl;
             }
         }else{
             std::cout << "Withdrawal failed. Your Daily limit is $500." << std::endl;
